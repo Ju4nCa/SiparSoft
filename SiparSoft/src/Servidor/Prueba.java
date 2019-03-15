@@ -19,7 +19,8 @@ public class Prueba {
        
         //Prueba de funcionalidad con la base de datos
         Server conexion = new Server();
-        conexion.ejecutar("SELECT * FROM Empleado", "nombre");
+        conexion.mostrar("Empleado");
+        //conexion.ingresar("Empleado"); Buscar mannera de introducir los datos
     }
     
 }

@@ -36,34 +36,63 @@ public class Server {
     //RECORDATORIO: cambiar la funcione por unas de buscar e ingresar, dependiendo
     //              de los objetos que se creen
     
-    public void ejecutar(String sql, String mostrar){
-        try{ 
-            Class.forName (DRIVER);
-            conexion = DriverManager.getConnection (URL,USER,PASS);
+    private void conexion(String sql) throws ClassNotFoundException, SQLException{
+        Class.forName (DRIVER);
+        conexion = DriverManager.getConnection (URL,USER,PASS);
             
             //sql sera la consulta en la base de datos
-            
             psSql=conexion.prepareStatement (sql);
             resultado = psSql.executeQuery();
-            
-            //Se muestra el resultado de la busqueda
-            //mostrar es el atributo que se quiere enseñar de la base de datos
-             while (resultado.next()){
-                System.out.println(resultado.getString(mostrar));
+            //Se muestra el resultado de la busquedA
+    }
+    
+    private void cerrarConexion(){
+         try{
+               
+           resultado.close();
+           psSql.close();
+           conexion.close();
+           
+         }catch(SQLException e){
+               e.printStackTrace();
+            } 
+    }
+    public void mostrar(String tabla){
+        try{ 
+            conexion("SELECT * FROM "+tabla);
+            int columna=1; 
+            while (resultado.next())
+            {
+                while (columna<resultado.getMetaData().getColumnCount()){
+                System.out.println(resultado.getString(columna));
+                columna++;
+                }
             }
-            
         }catch(Exception ex){
             System.out.println("Error en "+ex.getMessage());
-        }
-        finally{
-                try{
-                resultado.close();
-                psSql.close();
-                conexion.close();
-                }catch(SQLException e){
-                e.printStackTrace();
+       
+        }finally{
+                cerrarConexion();
+                }         
+      }
+     public void ingresar (String tabla){
+         
+          try{ 
+            conexion("INSERT INTO "+tabla+" VALUES ()");//bUSCAR MANERA DE INTRODUCIR LOS DATOS
+            int columna=1; 
+            while (resultado.next())
+            {
+                while (columna<resultado.getMetaData().getColumnCount()){
+                System.out.println(resultado.getString(columna));
+                columna++;
                 }
-                }
-    }
-
+            }
+        }catch(Exception ex){
+            System.out.println("Error en "+ex.getMessage());
+       
+        }finally{
+                cerrarConexion();
+                }         
+          
+     }
 }
