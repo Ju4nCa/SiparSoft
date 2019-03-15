@@ -63,7 +63,7 @@ public class Server {
             int columna=1; 
             while (resultado.next())
             {
-                while (columna<resultado.getMetaData().getColumnCount()){
+                while (columna<=resultado.getMetaData().getColumnCount()){
                 System.out.println(resultado.getString(columna));
                 columna++;
                 }
@@ -78,14 +78,10 @@ public class Server {
      public void ingresar (String tabla){
          
           try{ 
-            conexion("INSERT INTO "+tabla+" VALUES ()");//bUSCAR MANERA DE INTRODUCIR LOS DATOS
-            int columna=1; 
+            conexion("INSERT INTO "+tabla+" VALUES ()");//bUSCAR MANERA DE INTRODUCIR LOS DATOS 
             while (resultado.next())
             {
-                while (columna<resultado.getMetaData().getColumnCount()){
-                System.out.println(resultado.getString(columna));
-                columna++;
-                }
+                System.out.println("Datos introducidos");
             }
         }catch(Exception ex){
             System.out.println("Error en "+ex.getMessage());
